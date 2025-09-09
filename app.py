@@ -14,9 +14,21 @@ st.title("📊 Walmart Sales Dashboard")
 # Sidebar filters
 st.sidebar.header("Filter Options")
 
-branch = st.sidebar.selectbox("Select Branch", sorted (df["Branch"].unique()), key="branch_filter")
+branch = st.sidebar.selectbox(
+    "Select Branch",
+    sorted(df["Branch"].unique()),
+    key="branch_filter"
+)
+
+# Filter dataset based on selected branch
 filtered_df = df[df["Branch"] == branch]
-city = st.sidebar.selectbox("Select City", sorted (df["City"].unique()), key="city_filter")
+
+# City filter (only cities from selected branch)
+city = st.sidebar.selectbox(
+    "Select City",
+    sorted(filtered_df["City"].unique()),
+    key="city_filter"
+)
 payment = st.sidebar.multiselect(
     "Select Payment Method",
     df["payment_method"].unique(),
@@ -131,6 +143,7 @@ with col2:
 
 with col3:
     st.metric("Total Quantity Sold", int(filtered_df["quantity"].sum()))
+
 
 
 
